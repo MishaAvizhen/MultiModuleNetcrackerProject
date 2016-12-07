@@ -38,12 +38,6 @@ public class CartRestController {
     @JsonView(Views.Public.class)
     public int removeAdvertFromCart(@RequestBody int advertId, @ModelAttribute("cart") List<Integer> cart) {
         int index = cart.indexOf((Integer) advertId);
-        LOG.info("advertId index " + index);
-        StringBuilder str = new StringBuilder();
-        for (Integer integer : cart) {
-            str.append(integer + ", ");
-        }
-        LOG.info("cart: " + str.toString() );
         if (index != -1 && cart.remove(index) != null) {
             return cart.size();
         }

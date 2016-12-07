@@ -28,7 +28,6 @@ public class MainController {
         return "index";
     }
 
-
     @RequestMapping(value = "/advert", method = RequestMethod.GET)
     public String showAdverts(ModelMap model) {
         initSession(model);
@@ -78,8 +77,8 @@ public class MainController {
             UserDetails userDetail = (UserDetails) auth.getPrincipal();
             model.addObject("username", userDetail.getUsername());
         }
-
-        model.setViewName("403");
+        model.setViewName("error");
+        model.addObject("errorCode", 403);
         return model;
 
     }
@@ -95,5 +94,6 @@ public class MainController {
             model.addAttribute("cart", new LinkedList<Integer>());
         }
     }
+
 }
 

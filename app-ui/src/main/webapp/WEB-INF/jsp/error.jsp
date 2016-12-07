@@ -16,7 +16,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta firstName="viewport" content="width=device-width, initial-scale=1">
     <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
-    <title><spring:message code="msg.pageNotFound"/></title>
+    <title><spring:message code="msg.errorPage"/></title>
     <c:url var="home" value="/" scope="request" />
 
     <spring:url value="/resources/css/main.css" var="coreCss" />
@@ -71,11 +71,11 @@
                         <li><a href="/cart"><spring:message code="msg.cart"/><span class="badge">${cart.size()}</span></a></li>
                     </ul>
                     <ul class="nav navbar-nav navbar-right">
-                        <a href="?locale=en">
+                        <a href="/?locale=en">
                             <spring:message code="msg.en"/>
                         </a>
                         |
-                        <a href="?locale=ru">
+                        <a href="/?locale=ru">
                             <spring:message code="msg.ru"/>
                         </a>
                         <input type="hidden" id="locale" value="${pageContext.response.locale}"/>
@@ -115,8 +115,32 @@
 </div>
 
 <div class="container">
-    <h1><spring:message code="msg.sorry"/></h1>
-    <h1> <spring:message code="msg.pageNotFound"/></h1>
+    <c:if test="${errorCode == 400}">
+        <h1><spring:message code="msg.sorry"/></h1>
+        <h1> <spring:message code="msg.badRequest"/></h1>
+    </c:if>
+    <c:if test="${errorCode == 403}">
+        <h1><spring:message code="msg.403"/></h1>
+        <c:choose>
+            <c:when test="${empty username}">
+                <h2><spring:message code="msg.haveNotPermission"/></h2>
+            </c:when>
+            <c:otherwise>
+                <h2><spring:message code="msg.username"/>: ${username} <br/>
+                    <spring:message code="msg.haveNotPermission"/></h2>
+            </c:otherwise>
+        </c:choose>
+    </c:if>
+    <c:if test="${errorCode == 404}">
+        <h1><spring:message code="msg.sorry"/></h1>
+        <h1> <spring:message code="msg.pageNotFound"/></h1>
+    </c:if>
+    <c:if test="${errorCode == 405}">
+        <h1><spring:message code="msg.sorry"/></h1>
+        <h1> <spring:message code="msg.operationNotSupported"/></h1>
+    </c:if>
+
+
 </div>
 
 <div class="container" id="footer">

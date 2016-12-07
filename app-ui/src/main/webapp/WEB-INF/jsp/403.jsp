@@ -115,17 +115,7 @@
 </div>
 
 <div class="container">
-    <h1><spring:message code="msg.403"/></h1>
 
-    <c:choose>
-        <c:when test="${empty username}">
-            <h2><spring:message code="msg.haveNotPermission"/></h2>
-        </c:when>
-        <c:otherwise>
-            <h2><spring:message code="msg.username"/>: ${username} <br/>
-                <spring:message code="msg.haveNotPermission"/></h2>
-        </c:otherwise>
-    </c:choose>
 </div>
 
 <div class="container" id="footer">

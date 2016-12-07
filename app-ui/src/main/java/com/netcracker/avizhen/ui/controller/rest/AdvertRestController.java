@@ -10,6 +10,8 @@ import com.netcracker.avizhen.services.service.CarService;
 import com.netcracker.avizhen.ui.web.model.OrderAdvertsCriteria;
 import com.netcracker.avizhen.ui.web.model.SearchAdvertsCriteria;
 import com.netcracker.avizhen.ui.web.model.SearchOrderAdvertsCriteria;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -29,6 +31,7 @@ import java.util.List;
 @RestController
 @RequestMapping(value = "/api")
 public class AdvertRestController {
+    private static Logger LOG = LogManager.getLogger();
 
     @Autowired
     private AdvertService advertService;
@@ -45,6 +48,7 @@ public class AdvertRestController {
     @RequestMapping(value = "/advert", method = RequestMethod.POST)
     @JsonView(Views.Public.class)
     public Advert addAdvert(@RequestBody @Valid Advert advert) {
+        LOG.info("Addition advert: " + advert);
         return advertService.addAdvert(advert);
     }
 

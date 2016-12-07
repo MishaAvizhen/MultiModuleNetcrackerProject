@@ -2,6 +2,8 @@ package com.netcracker.avizhen.ui.controller;
 
 import com.netcracker.avizhen.persistence.entity.Advert;
 import com.netcracker.avizhen.services.service.AdvertService;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -15,11 +17,14 @@ import org.springframework.web.servlet.ModelAndView;
 @Controller
 @RequestMapping("/admin")
 public class AdminController {
+    private static Logger LOG = LogManager.getLogger();
+
     @Autowired
     private AdvertService advertService;
 
     @RequestMapping(value = "/advert/delete", method = RequestMethod.POST)
     public ModelAndView removeAdvert(@RequestParam("deleteAdvertId") int deleteAdvertId) {
+        LOG.info("Deletion advert with id " + deleteAdvertId);
         advertService.removeAdvertById(deleteAdvertId);
         ModelAndView modelAndView = new ModelAndView("redirect:/advert");
         modelAndView.addObject("msg", "Advert was deleted successful");
@@ -28,6 +33,7 @@ public class AdminController {
 
     @RequestMapping(value = "/advert/edit", method = RequestMethod.POST)
     public ModelAndView editAdvert(@RequestParam("editAdvertId") int editAdvertId) {
+        LOG.info("Modification advert with id " + editAdvertId);
         ModelAndView modelAndView = new ModelAndView("editAdvert");
         Advert advert = advertService.findAdvertById(editAdvertId);
         if (advert == null) {

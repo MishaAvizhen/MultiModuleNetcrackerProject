@@ -2,11 +2,13 @@ package com.netcracker.avizhen.ui.controller;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.HttpRequestMethodNotSupportedException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseStatus;
+import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.NoHandlerFoundException;
 
 /**
@@ -18,13 +20,27 @@ public class ExceptionController {
     private static Logger LOG = LogManager.getLogger();
 
     @ExceptionHandler(NoHandlerFoundException.class)
-    public String handlerResourceNotFoundException() {
-        LOG.info("handler resource not found");
-        return "redirect:/404";
+    public ModelAndView handlerResourceNotFoundException(Exception e) {
+        LOG.info("handler resource not found: " + e.getMessage());
+        ModelAndView mav = new ModelAndView("error");
+        mav.addObject("errorCode", 404);
+        return mav;
     }
 
-    @RequestMapping(value = {"/404"}, method = RequestMethod.GET)
-    public String notFoundPage() {
-        return "404";
+    @ExceptionHandler(HttpRequestMethodNotSupportedException.class)
+    public ModelAndView methodNotSupportedException(Exception e) {
+        LOG.info("Method not supported: " + e.getMessage());
+        ModelAndView mav = new ModelAndView("error");
+        mav.addObject("errorCode", 405);
+        return mav;
+    }
+
+    @ExceptionHandler(IllegalArgumentException.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public ModelAndView badRequest(Exception e) {
+        LOG.info("Bad request: " + e.getMessage());
+        ModelAndView mav = new ModelAndView("error");
+        mav.addObject("errorCode", 400);
+        return mav;
     }
 }

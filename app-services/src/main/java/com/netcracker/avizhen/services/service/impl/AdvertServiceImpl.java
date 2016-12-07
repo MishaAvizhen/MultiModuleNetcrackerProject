@@ -28,8 +28,7 @@ public class AdvertServiceImpl implements AdvertService {
 
     @Override
     public List<Advert> findAllAdverts() {
-        List<Advert> result = advertRepository.getAll();
-        return result;
+        return advertRepository.getAll();
     }
 
     @Override
