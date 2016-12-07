@@ -1,6 +1,5 @@
 package com.netcracker.avizhen.ui.security;
 
-import com.netcracker.avizhen.persistence.entity.Advert;
 import com.netcracker.avizhen.persistence.entity.User;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -12,7 +11,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
-import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
 /**
@@ -24,7 +23,7 @@ public class CustomAuthenticationSuccessHandler implements AuthenticationSuccess
     public void onAuthenticationSuccess(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, Authentication authentication) throws IOException, ServletException {
         HttpSession session = httpServletRequest.getSession();
         if (session.getAttribute("cart") == null) {
-            session.setAttribute("cart", new ArrayList<Advert>());
+            session.setAttribute("cart", new LinkedList<Integer>());
         } else {
             ((List) session.getAttribute("cart")).clear();
         }

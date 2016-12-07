@@ -54,7 +54,9 @@
         $( document ).ready(function() {
             window.Parsley.setLocale($("#locale").val());
         });
+
     </script>
+    <script src="/resources/js/parsley/cutomValidators.js"></script>
 
     <script type="text/javascript" src="<c:url value="/resources/js/app/service/AdvertService.js" />"></script>
     <script type="text/javascript" src="<c:url value="/resources/js/app/controller/EditAdvertController.js" />"></script>
@@ -71,7 +73,7 @@
 <body>
 <div class="container">
     <div class="row">
-        <h1>Site name</h1>
+        <h1><spring:message code="msg.siteName"/></h1>
         <div class="navbar navbar-inverse">
             <div class="container">
                 <div class="navbar-header">
@@ -81,7 +83,7 @@
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
                     </button>
-                    <a class="navbar-brand" href="/"> Company logo</a>
+                    <a class="navbar-brand" href="/"><img src="/resources/images/companyLogo.png"></a>
                 </div>
                 <div class="collapse navbar-collapse" id="responsive-menu">
                     <ul class="nav navbar-nav">
@@ -195,12 +197,12 @@
                             <spring:message code="car.price"/>
                         </label>
                         <input class="form-control" id="carPrice" name="carPrice" type="text"
-                               data-parsley-type="digits" data-parsley-max="2000000000"/>
+                               data-parsley-type="digits" data-parsley-max="2000000000" required="required"/>
                         <label class="control-label" for="carYear">
                             <spring:message code="car.year"/>
                         </label>
                         <input class="form-control" id="carYear" name="carPrice" type="text"
-                               data-parsley-type="digits" data-parsley-length="[4, 4]" required="required"/>
+                               data-parsley-type="digits" data-parsley-real-year="1800" required="required"/>
                         <label class="control-label" for="carCondition">
                             <spring:message code="car.condition"/>
                         </label>
@@ -230,7 +232,7 @@
 <div class="container" id="footer">
     <hr />
     <div class="text-center center-block">
-        <p class="txt-railway">- avizhen.com -</p>
+        <p class="txt-railway"> <spring:message code="msg.siteUrl"/></p>
         <br />
         <a href="https://vk.com/alex_avizhen"><i class="fa fa fa-vk fa-3x social"></i></a>
         <a href="https://plus.google.com/116724968968879958223"><i class="fa fa-google-plus-square fa-3x social"></i></a>

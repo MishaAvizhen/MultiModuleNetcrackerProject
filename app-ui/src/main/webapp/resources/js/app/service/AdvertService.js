@@ -4,15 +4,20 @@
 var AdvertService = (function () {
 
     var methods = {
-        loadAdvert: function (advertId, callback) {
+        loadAdvert: function (advertId, async, callback, errorback) {
             $.ajax({
                 url: "/api/advert/" + advertId,
                 method: "GET",
+                async: async,
                 success: function (data) {
                     callback(data);
                 },
                 error: function () {
-                    console.error("cannot load advert");
+                    if(errorback == undefined) {
+                        console.error("cannot load advert");
+                    } else {
+                        errorback();
+                    }
                 }
             });
         },

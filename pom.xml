@@ -3,7 +3,6 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
-
     <groupId>com.netcracker.avizhen</groupId>
     <artifactId>main-module</artifactId>
     <packaging>pom</packaging>
@@ -13,12 +12,10 @@
         <module>app-services</module>
         <module>app-ui</module>
     </modules>
-
     <properties>
         <spring.version>4.3.3.RELEASE</spring.version>
         <spring.security.version>3.2.3.RELEASE</spring.security.version>
     </properties>
-
     <dependencies>
         <!--Spring-->
         <dependency>
@@ -31,7 +28,6 @@
             <artifactId>spring-context</artifactId>
             <version>${spring.version}</version>
         </dependency>
-
         <!--JUnit-->
         <dependency>
             <groupId>junit</groupId>
@@ -39,7 +35,6 @@
             <version>4.12</version>
             <scope>test</scope>
         </dependency>
-
         <dependency>
             <groupId>org.slf4j</groupId>
             <artifactId>slf4j-api</artifactId>
@@ -51,7 +46,16 @@
             <version>1.7.16</version>
         </dependency>
 
+        <!-- Log4j -->
+        <dependency>
+            <groupId>org.apache.logging.log4j</groupId>
+            <artifactId>log4j-api</artifactId>
+            <version>2.7</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.logging.log4j</groupId>
+            <artifactId>log4j-core</artifactId>
+            <version>2.7</version>
+        </dependency>
     </dependencies>
-
-
 </project>

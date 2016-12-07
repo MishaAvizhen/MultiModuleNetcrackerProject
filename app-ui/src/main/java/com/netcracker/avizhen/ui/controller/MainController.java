@@ -1,8 +1,7 @@
 package com.netcracker.avizhen.ui.controller;
 
-import com.netcracker.avizhen.persistence.entity.Advert;
-import com.netcracker.avizhen.services.service.AdvertService;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -12,7 +11,7 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
-import java.util.ArrayList;
+import java.util.LinkedList;
 
 /**
  * Created by Александр on 28.10.2016.
@@ -21,32 +20,32 @@ import java.util.ArrayList;
 @Controller
 @SessionAttributes({"cart"})
 public class MainController {
-
-    @Autowired
-    private AdvertService advertService;
+    private static Logger LOG = LogManager.getLogger();
 
     @RequestMapping(value = "/")
-    public String printHello(ModelMap model) {
-        if(!model.containsAttribute("cart")) {
-            model.addAttribute("cart", new ArrayList<Advert>());
-        }
+    public String showWelcomePage(ModelMap model) {
+        initSession(model);
         return "index";
     }
 
+
     @RequestMapping(value = "/advert", method = RequestMethod.GET)
-    public String getAdverts() {
+    public String showAdverts(ModelMap model) {
+        initSession(model);
         return "adverts";
     }
 
     @RequestMapping(value = "/advert/{id}", method = RequestMethod.GET)
-    public ModelAndView getAdvert(@PathVariable Integer id) {
+    public ModelAndView showAdvert(@PathVariable Integer id, ModelMap model) {
         ModelAndView modelAndView = new ModelAndView("advert");
+        initSession(model);
         modelAndView.addObject("advertId", id);
         return modelAndView;
     }
 
     @RequestMapping(value = "/cart", method = RequestMethod.GET)
-    public String showCart() {
+    public String showCart(ModelMap model) {
+        initSession(model);
         return "cart";
     }
 
@@ -61,9 +60,7 @@ public class MainController {
         }
         if (logout != null) {
             model.addObject("msg", "You've been logged out successfully.");
-            if(!modelMap.containsAttribute("cart")) {
-                modelMap.addAttribute("cart", new ArrayList<Advert>());
-            }
+            initSession(modelMap);
         }
         model.setViewName("login");
         return model;
@@ -91,6 +88,12 @@ public class MainController {
     @RequestMapping("/favicon.ico")
     String favicon() {
         return "forward:/resources/images/favicon.ico";
+    }
+
+    private void initSession(ModelMap model) {
+        if(!model.containsAttribute("cart")) {
+            model.addAttribute("cart", new LinkedList<Integer>());
+        }
     }
 }
 

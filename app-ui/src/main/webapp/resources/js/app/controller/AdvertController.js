@@ -15,7 +15,7 @@ $(function () {
             showAdvert: function () {
                 var lang = $("#locale").val();
                 setLang(lang, function() {});
-                AdvertService.loadAdvert($("#advertContainer").attr("advert-id"), function (data) {
+                AdvertService.loadAdvert($("#advertContainer").attr("advert-id"), true, function (data) {
                     advert = data;
                     render(advert);
                     updatePrice(defaultAbbr);
@@ -58,6 +58,7 @@ $(function () {
                 notFoundPanel.append("<h3>"+ $.i18n.prop('advert.notFound') + "</h3>");
                 $("#editAdvert").text($.i18n.prop('advert.add'));
                 $("#deleteAdvert").attr("disabled", true);
+                $("#addAdvertToCart").attr("disabled", true);
                 return notFoundPanel;
             }
             var $panel = $('<div>', {class: 'panel panel-default', id: 'panel' + advert.id});

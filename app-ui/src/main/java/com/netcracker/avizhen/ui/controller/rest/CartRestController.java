@@ -4,6 +4,8 @@ import com.fasterxml.jackson.annotation.JsonView;
 import com.netcracker.avizhen.persistence.entity.Advert;
 import com.netcracker.avizhen.persistence.web.jsonview.Views;
 import com.netcracker.avizhen.services.service.AdvertService;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -16,29 +18,33 @@ import java.util.List;
 @RequestMapping(value = "/api")
 @SessionAttributes({"cart"})
 public class CartRestController {
+    private static Logger LOG = LogManager.getLogger();
+
     @Autowired
     private AdvertService advertService;
 
     @RequestMapping(value = "/cart", method = RequestMethod.POST)
     @JsonView(Views.Public.class)
-    public int addAdvertToCart(@RequestBody int advertId, @ModelAttribute("cart") List<Advert> cart) {
+    public int addAdvertToCart(@RequestBody int advertId, @ModelAttribute("cart") List<Integer> cart) {
         Advert advert = advertService.findAdvertById(advertId);
         if (advert == null) {
             return -1;
         }
-        cart.add(advert);
+        cart.add(advertId);
         return cart.size();
     }
 
     @RequestMapping(value = "/cart/remove", method = RequestMethod.POST)
     @JsonView(Views.Public.class)
-    public int removeAdvertFromCart(@RequestBody int advertId, @ModelAttribute("cart") List<Advert> cart) {
-        Advert advert = advertService.findAdvertById(advertId);
-        if (advert == null) {
-            advert = new Advert();
-            advert.setId(advertId);
+    public int removeAdvertFromCart(@RequestBody int advertId, @ModelAttribute("cart") List<Integer> cart) {
+        int index = cart.indexOf((Integer) advertId);
+        LOG.info("advertId index " + index);
+        StringBuilder str = new StringBuilder();
+        for (Integer integer : cart) {
+            str.append(integer + ", ");
         }
-        if (cart.remove(advert)) {
+        LOG.info("cart: " + str.toString() );
+        if (index != -1 && cart.remove(index) != null) {
             return cart.size();
         }
         return -1;

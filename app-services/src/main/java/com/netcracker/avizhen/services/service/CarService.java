@@ -21,7 +21,5 @@ public interface CarService {
                                                 int priceFrom, int priceTo);
     Page<Car> findByMakeYearBetweenPriceBetween(String make, int yearFrom, int yearTo,
                                                 int priceFrom, int priceTo, Pageable pageable);
-
-
-
+    long getCount();
 }

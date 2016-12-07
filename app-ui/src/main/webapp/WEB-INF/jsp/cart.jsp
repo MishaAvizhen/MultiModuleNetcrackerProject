@@ -45,6 +45,7 @@
 
     <script type="text/javascript" src="<c:url value="/resources/js/app/service/RateService.js" />"></script>
     <script type="text/javascript" src="<c:url value="/resources/js/app/service/CartService.js" />"></script>
+    <script type="text/javascript" src="<c:url value="/resources/js/app/service/AdvertService.js" />"></script>
     <script type="text/javascript" src="<c:url value="/resources/js/app/controller/RateController.js" />"></script>
     <script type="text/javascript" src="<c:url value="/resources/js/app/controller/CartController.js" />"></script>
 
@@ -58,7 +59,7 @@
 <body>
 <div class="container">
     <div class="row">
-        <h1>Site name</h1>
+        <h1><spring:message code="msg.siteName"/></h1>
         <div class="navbar navbar-inverse">
             <div class="container">
                 <div class="navbar-header">
@@ -68,7 +69,7 @@
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
                     </button>
-                    <a class="navbar-brand" href="/"> Company logo</a>
+                    <a class="navbar-brand" href="/"><img src="/resources/images/companyLogo.png"></a>
                 </div>
                 <div class="collapse navbar-collapse" id="responsive-menu">
                     <ul class="nav navbar-nav">
@@ -135,27 +136,9 @@
 
 <div class="container">
     <div class="row">
+        <input type="hidden" id="advertsInput" value="${cart}">
         <div class="col-md-8 col-lg-9" id="contentContainer">
-            <c:forEach items="${cart}" var="advert">
-                <div class="row panel panel-default" id="advertDiv${advert.id}">
-                    <div class="col-md-8 col-lg-9">
-                        <spring:message code="car.make"/>: ${advert.car.make}<br>
-                        <spring:message code="car.model"/>: ${advert.car.model}<br>
-                        <spring:message code="car.price"/>: ${advert.car.price}
-                        <spring:message code="currency.br"/><br>
-                        <spring:message code="car.year"/>: ${advert.car.year}<br>
-                        <spring:message code="car.condition"/>: ${advert.car.condition}<br>
-                        ${advert.description}
-                    </div>
-                    <div class="col-md-4 col-lg-3">
-                        <a href="/advert/${advert.id}"><spring:message code="msg.more"/></a>
-                        <button class="btn btn-primary removeAdvertFromCart" advert-id="${advert.id}">
-                            <spring:message code="advert.remove"/>
-                        </button>
-                        <div id="removeAdvertFromCartMsg${advert.id}"></div>
-                    </div>
-                </div>
-            </c:forEach>
+
         </div>
         <div class="col-md-4 col-lg-3" id="rateContainer">
 
@@ -167,7 +150,7 @@
 <div class="container" id="footer">
     <hr />
     <div class="text-center center-block">
-        <p class="txt-railway">- avizhen.com -</p>
+        <p class="txt-railway"> <spring:message code="msg.siteUrl"/></p>
         <br />
         <a href="https://vk.com/alex_avizhen"><i class="fa fa fa-vk fa-3x social"></i></a>
         <a href="https://plus.google.com/116724968968879958223"><i class="fa fa-google-plus-square fa-3x social"></i></a>

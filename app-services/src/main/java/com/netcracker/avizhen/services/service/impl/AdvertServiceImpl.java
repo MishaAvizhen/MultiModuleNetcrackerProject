@@ -10,6 +10,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.validation.Valid;
 import java.util.List;
 
 /**
@@ -37,7 +38,7 @@ public class AdvertServiceImpl implements AdvertService {
     }
 
     @Override
-    public Advert addAdvert(Advert advert) {
+    public Advert addAdvert(@Valid Advert advert) {
         carRepository.save(advert.getCar());
         return advertRepository.save(advert);
     }

@@ -2,7 +2,6 @@ package com.netcracker.avizhen.services.service.impl;
 
 import com.netcracker.avizhen.persistence.entity.Car;
 import com.netcracker.avizhen.persistence.repository.CarRepository;
-import com.netcracker.avizhen.services.model.JsonPageResponse;
 import com.netcracker.avizhen.services.service.CarService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -91,9 +90,14 @@ public class CarServiceImpl implements CarService {
         }
         if (make.isEmpty()) {
             Page<Car> page = carRepository.findByPriceBetweenAndYearBetween(priceFrom, priceTo, yearFrom, yearTo, pageable);
-            return new JsonPageResponse<Car>(page, pageable);
+            return page;
         }
         return carRepository.findByMakeAndPriceBetweenAndYearBetween(make, priceFrom, priceTo, yearFrom, yearTo, pageable);
+    }
+
+    @Override
+    public long getCount() {
+        return carRepository.count();
     }
 
     public Car findTheLimitCarByPrice(Sort.Direction sortDirection) {

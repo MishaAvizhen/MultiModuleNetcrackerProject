@@ -3,6 +3,7 @@ package com.netcracker.avizhen.services.restws.service.impl;
 import com.netcracker.avizhen.services.restws.entity.Rate;
 import com.netcracker.avizhen.services.restws.service.RateService;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
 
 import java.time.LocalDate;
@@ -15,6 +16,7 @@ import java.util.*;
 public class RateServiceImpl implements RateService {
     private RestTemplate restTemplate;
     private Map<String, Integer> currencyAbbreviationToId;
+    private List<Rate> cashRates = new ArrayList<>();
 
     public RateServiceImpl() {
         currencyAbbreviationToId = new HashMap<>();
@@ -27,18 +29,35 @@ public class RateServiceImpl implements RateService {
 
     @Override
     public Rate getRate(String currencyAbbreviation, LocalDate localDate) {
-        return restTemplate.getForObject("http://www.nbrb.by/API/ExRates/Rates/" +
-                currencyAbbreviationToId.get(currencyAbbreviation) +
-                "?onDate=" + localDate, Rate.class);
+        Rate res = null;
+        try {
+            res = restTemplate.getForObject("http://www.nbrb.by/API/ExRates/Rates/" +
+                    currencyAbbreviationToId.get(currencyAbbreviation) +
+                    "?onDate=" + localDate, Rate.class);
+
+        } catch (RestClientException e) {
+            return findRateInList(currencyAbbreviation, cashRates);
+        }
+
+        return res;
+    }
+
+    private Rate findRateInList(String currencyAbbreviation, List<Rate> rates) {
+        for (Rate rate : rates) {
+            if (rate.getCur_Abbreviation().equalsIgnoreCase(currencyAbbreviation)) {
+                return rate;
+            }
+        }
+        return null;
     }
 
     @Override
     public List<Rate> getAllRates(LocalDate localDate) {
         List<Rate> result = new ArrayList<>();
-        for (Integer id : currencyAbbreviationToId.values()) {
-            result.add(restTemplate.getForObject("http://www.nbrb.by/API/ExRates/Rates/" +
-                    id + "?onDate=" + localDate, Rate.class));
+        for (String abbr : currencyAbbreviationToId.keySet()) {
+            result.add(getRate(abbr, localDate));
         }
+        cashRates = result;
         return result;
     }
 
@@ -50,6 +69,9 @@ public class RateServiceImpl implements RateService {
     @Override
     public double convertPriceTo(double price, String abbr) {
         Rate rate = getRate(abbr, LocalDate.now());
+        if (rate == null) {
+            return 0;
+        }
         return price / rate.getCur_OfficialRate() * rate.getCur_Scale();
     }
 

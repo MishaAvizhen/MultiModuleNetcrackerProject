@@ -8,23 +8,16 @@ $(function () {
         var methods = {
             init: function () {
                 this.initAdvert();
-                this.initFormInputClass();
                 this.bindEvents();
             },
             initAdvert: function () {
                 var advertId = +$("#advertId").val();
                 if(advertId > 0) {
-                    AdvertService.loadAdvert(advertId, function(data) {
+                    AdvertService.loadAdvert(advertId, true, function(data) {
                         advert = data;
                         initFormInputs(advert);
                     });
                 }
-            },
-            initFormInputClass: function() {
-                $(".positive-integer").numeric({ decimal: false, negative: false },
-                    function() { alert("Positive integers only");
-                        this.value = "";
-                        this.focus(); });
             },
             bindEvents: function() {
                 $("#editForm").submit(function (e) {

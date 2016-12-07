@@ -38,6 +38,7 @@ public class Car {
     @JsonView(Views.Public.class)
     private String make;
 
+    @NotNull
     @Column(name = "price")
     @JsonView(Views.Public.class)
     private Integer price;
@@ -174,4 +175,6 @@ public class Car {
                 ", description='" + description + '\'' +
                 '}';
     }
+
+
 }

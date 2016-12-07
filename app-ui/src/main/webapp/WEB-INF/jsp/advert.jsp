@@ -61,7 +61,7 @@
 <body>
 <div class="container">
     <div class="row">
-        <h1>Site name</h1>
+        <h1><spring:message code="msg.siteName"/></h1>
         <div class="navbar navbar-inverse">
             <div class="container">
                 <div class="navbar-header">
@@ -71,7 +71,7 @@
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
                     </button>
-                    <a class="navbar-brand" href="/"> Company logo</a>
+                    <a class="navbar-brand" href="/"><img src="/resources/images/companyLogo.png"></a>
                 </div>
                 <div class="collapse navbar-collapse" id="responsive-menu">
                     <ul class="nav navbar-nav">
@@ -158,7 +158,7 @@
         </sec:authorize>
         <form id="addAdvertToCartForm">
             <input type="hidden" name="advertId" id="advertId" value="${advertId}">
-            <button type="submit" class="btn btn-primary">
+            <button type="submit" class="btn btn-primary" id="addAdvertToCart">
                 <spring:message code="msg.addToCart"/>
             </button>
             <div id="addAdvertToCartMsg"></div>
@@ -170,7 +170,7 @@
 <div class="container" id="footer">
     <hr />
     <div class="text-center center-block">
-        <p class="txt-railway">- avizhen.com -</p>
+        <p class="txt-railway"> <spring:message code="msg.siteUrl"/></p>
         <br />
         <a href="https://vk.com/alex_avizhen"><i class="fa fa fa-vk fa-3x social"></i></a>
         <a href="https://plus.google.com/116724968968879958223"><i class="fa fa-google-plus-square fa-3x social"></i></a>

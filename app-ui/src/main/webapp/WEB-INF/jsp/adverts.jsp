@@ -59,12 +59,15 @@
             window.Parsley.setLocale($("#locale").val());
         });
     </script>
+    <script src="/resources/js/parsley/cutomValidators.js"></script>
+
 
     <script type="text/javascript" src="<c:url value="/resources/js/app/service/AdvertService.js" />"></script>
     <script type="text/javascript" src="<c:url value="/resources/js/app/service/RateService.js" />"></script>
     <script type="text/javascript" src="<c:url value="/resources/js/app/service/CarService.js" />"></script>
     <script type="text/javascript" src="<c:url value="/resources/js/app/controller/AdvertsController.js" />"></script>
     <script type="text/javascript" src="<c:url value="/resources/js/app/controller/RateController.js" />"></script>
+
 
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -79,7 +82,7 @@
     <input type="hidden" id="pageScope" value="${pageScope}">
     <input type="hidden" id="req" value="${requestScope}">
     <div class="row">
-        <h1>Site name</h1>
+        <h1><spring:message code="msg.siteName"/></h1>
 
         <div class="navbar navbar-inverse">
             <div class="container">
@@ -90,7 +93,7 @@
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
                     </button>
-                    <a class="navbar-brand" href="/"> Company logo</a>
+                    <a class="navbar-brand" href="/"><img src="/resources/images/companyLogo.png"></a>
                 </div>
                 <div class="collapse navbar-collapse" id="responsive-menu">
                     <ul class="nav navbar-nav">
@@ -238,7 +241,8 @@
                                 <spring:message code="price.to"/>
                             </label>
                             <input type="text" id="priceTo" placeholder="<spring:message code='price.to'/>"
-                                   class="form-control" data-parsley-type="digits" data-parsley-max="2000000000">
+                                   class="form-control" data-parsley-type="digits" data-parsley-max="2000000000"
+                                   data-parsley-number-after-input="#priceFrom">
                         </div>
                     </div>
                     <div class="form-group row">
@@ -247,14 +251,15 @@
                                 <spring:message code="year.from"/>
                             </label>
                             <input type="text" id="yearFrom" placeholder="<spring:message code='year.from'/>"
-                                   class="form-control" data-parsley-type="digits" data-parsley-length="[4, 4]">
+                                   class="form-control" data-parsley-type="digits" data-parsley-real-year="1800">
                         </div>
                         <div class="col-lg-6 col-md-6">
                             <label for="yearTo">
                                 <spring:message code="year.to"/>
                             </label>
                             <input type="text" id="yearTo" placeholder="<spring:message code='year.to'/>"
-                                   class="form-control" data-parsley-type="digits" data-parsley-length="[4, 4]">
+                                   class="form-control" data-parsley-type="digits" data-parsley-real-year="1800"
+                                   data-parsley-number-after-input="#yearFrom">
                         </div>
                     </div>
                     <div class="row">
@@ -283,7 +288,7 @@
 <div class="container" id="footer">
     <hr />
     <div class="text-center center-block">
-        <p class="txt-railway">- avizhen.com -</p>
+        <p class="txt-railway"> <spring:message code="msg.siteUrl"/></p>
         <br />
         <a href="https://vk.com/alex_avizhen"><i class="fa fa fa-vk fa-3x social"></i></a>
         <a href="https://plus.google.com/116724968968879958223"><i class="fa fa-google-plus-square fa-3x social"></i></a>
