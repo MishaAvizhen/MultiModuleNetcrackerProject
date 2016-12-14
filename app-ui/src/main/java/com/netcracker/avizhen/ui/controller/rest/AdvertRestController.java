@@ -4,7 +4,7 @@ import com.fasterxml.jackson.annotation.JsonView;
 import com.netcracker.avizhen.persistence.entity.Advert;
 import com.netcracker.avizhen.persistence.entity.Car;
 import com.netcracker.avizhen.persistence.web.jsonview.Views;
-import com.netcracker.avizhen.services.model.JsonPageResponse;
+import com.netcracker.avizhen.ui.web.model.JsonPageResponse;
 import com.netcracker.avizhen.services.service.AdvertService;
 import com.netcracker.avizhen.services.service.CarService;
 import com.netcracker.avizhen.ui.web.model.OrderAdvertsCriteria;

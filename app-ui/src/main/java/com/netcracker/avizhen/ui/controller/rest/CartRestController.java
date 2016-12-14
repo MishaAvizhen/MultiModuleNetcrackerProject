@@ -23,6 +23,12 @@ public class CartRestController {
     @Autowired
     private AdvertService advertService;
 
+    @RequestMapping(value = "/cart", method = RequestMethod.GET)
+    @JsonView(Views.Public.class)
+    public List<Integer> getCart(@ModelAttribute("cart") List<Integer> cart) {
+        return cart;
+    }
+
     @RequestMapping(value = "/cart", method = RequestMethod.POST)
     @JsonView(Views.Public.class)
     public int addAdvertToCart(@RequestBody int advertId, @ModelAttribute("cart") List<Integer> cart) {

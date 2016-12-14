@@ -21,7 +21,7 @@ public class ExceptionController {
 
     @ExceptionHandler(NoHandlerFoundException.class)
     public ModelAndView handlerResourceNotFoundException(Exception e) {
-        LOG.info("handler resource not found: " + e.getMessage());
+        LOG.info("Handler resource not found: " + e.getMessage());
         ModelAndView mav = new ModelAndView("error");
         mav.addObject("errorCode", 404);
         return mav;

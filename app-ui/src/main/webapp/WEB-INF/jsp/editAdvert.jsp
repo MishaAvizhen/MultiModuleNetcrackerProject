@@ -89,8 +89,7 @@
                     <ul class="nav navbar-nav">
                         <li><a href="/"><spring:message code="msg.main"/></a> </li>
                         <li><a href="/advert"><spring:message code="msg.adverts"/></a></li>
-                        <li><a href="#"><spring:message code="msg.discounts"/></a> </li>
-                        <li><a href="#"><spring:message code="msg.contacts"/></a> </li>
+                        <li><a href="/contacts"><spring:message code="msg.contacts"/></a></li>
                         <li><a href="/cart"><spring:message code="msg.cart"/><span class="badge">${cart.size()}</span></a></li>
                     </ul>
                     <ul class="nav navbar-nav navbar-right">
@@ -114,7 +113,7 @@
                             <sec:authentication var="user" property="principal" />
                             <c:if test="${user.userName != null}">
                                 <li id="user-name-label">
-                                    <a>
+                                    <a href="/order">
                                         <span class="glyphicon glyphicon-user"></span>
                                         ${user.userName}
                                     </a>

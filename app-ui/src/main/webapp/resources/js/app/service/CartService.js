@@ -20,6 +20,18 @@ var CartService = (function () {
                 }
             });
         },
+        loadCart: function(callback) {
+            $.ajax({
+                url: "/api/cart",
+                method: "GET",
+                success: function (data) {
+                    callback(data);
+                },
+                error: function () {
+                    console.error("cannot load cart");
+                }
+            });
+        },
         removeAdvertFromCart: function (advertId, callback) {
             $.ajax({
                 url: "/api/cart/remove",

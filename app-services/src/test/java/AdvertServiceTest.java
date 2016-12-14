@@ -1,7 +1,9 @@
 import com.netcracker.avizhen.persistence.entity.Advert;
+import com.netcracker.avizhen.persistence.entity.Order;
 import com.netcracker.avizhen.services.config.ServiceConfig;
 import com.netcracker.avizhen.services.service.AdvertService;
 import com.netcracker.avizhen.services.service.CarService;
+import com.netcracker.avizhen.services.service.OrderService;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.junit.Assert;
@@ -37,5 +39,16 @@ public class AdvertServiceTest {
     @Test
     public void testOneToOneBetweenAdvertAndCar() {
         Assert.assertEquals(carService.getCount(), advertService.getCount());
+    }
+
+    @Autowired
+    private OrderService orderService;
+
+    @Test
+    @Transactional
+    public void test() {
+        for (Order o : orderService.findOrdersByUsername("testlogin1")) {
+            System.out.println(o);
+        }
     }
 }

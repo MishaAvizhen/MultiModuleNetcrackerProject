@@ -46,6 +46,7 @@
     <script type="text/javascript" src="<c:url value="/resources/js/app/service/RateService.js" />"></script>
     <script type="text/javascript" src="<c:url value="/resources/js/app/service/CartService.js" />"></script>
     <script type="text/javascript" src="<c:url value="/resources/js/app/service/AdvertService.js" />"></script>
+    <script type="text/javascript" src="<c:url value="/resources/js/app/service/OrderService.js" />"></script>
     <script type="text/javascript" src="<c:url value="/resources/js/app/controller/RateController.js" />"></script>
     <script type="text/javascript" src="<c:url value="/resources/js/app/controller/CartController.js" />"></script>
 
@@ -75,8 +76,7 @@
                     <ul class="nav navbar-nav">
                         <li><a href="/"><spring:message code="msg.main"/></a> </li>
                         <li><a href="/advert"><spring:message code="msg.adverts"/></a></li>
-                        <li><a href="#"><spring:message code="msg.discounts"/></a> </li>
-                        <li><a href="#"><spring:message code="msg.contacts"/></a> </li>
+                        <li><a href="/contacts"><spring:message code="msg.contacts"/></a></li>
                         <li>
                             <a href="/cart">
                                 <spring:message code="msg.cart"/>
@@ -105,7 +105,7 @@
                             <sec:authentication var="user" property="principal" />
                             <c:if test="${user.userName != null}">
                                 <li id="user-name-label">
-                                    <a>
+                                    <a href="/order">
                                         <span class="glyphicon glyphicon-user"></span>
                                         ${user.userName}
                                     </a>
@@ -140,7 +140,25 @@
         <div class="col-md-8 col-lg-9" id="contentContainer">
 
         </div>
-        <div class="col-md-4 col-lg-3" id="rateContainer">
+        <div class="col-md-4 col-lg-3">
+            <div id="cartControls">
+                <spring:message code="price.total"/>:
+                <span id="totalPrice">
+
+                </span>
+                <sec:authorize access="isAuthenticated()">
+                    <input type="hidden" id="userInput" value="${user.id}">
+                    <c:if test="${cart.size() > 0}">
+                        <button type="button" class="btn btn-primary" id="makeOrderBtn">
+                            <spring:message code="msg.makeOrder"/>
+                        </button>
+                    </c:if>
+                </sec:authorize>
+            </div>
+            <hr>
+            <div id="rateContainer">
+
+            </div>
 
         </div>
     </div>

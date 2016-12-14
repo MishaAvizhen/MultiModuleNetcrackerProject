@@ -1,4 +1,3 @@
-
 <%--
   Created by IntelliJ IDEA.
   User: Александр
@@ -16,7 +15,8 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta firstName="viewport" content="width=device-width, initial-scale=1">
     <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
-    <title><spring:message code="msg.403"/></title>
+    <title><spring:message code="msg.contacts"/></title>
+
     <c:url var="home" value="/" scope="request" />
 
     <spring:url value="/resources/css/main.css" var="coreCss" />
@@ -38,6 +38,7 @@
 
     <spring:url value="/resources/js/lib/jquery.i18n.properties-min-1.0.9.js" var="jqueryi18n"/>
     <script src="${jqueryi18n}"></script>
+
 
 
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
@@ -66,8 +67,7 @@
                     <ul class="nav navbar-nav">
                         <li><a href="/"><spring:message code="msg.main"/></a> </li>
                         <li><a href="/advert"><spring:message code="msg.adverts"/></a></li>
-                        <li><a href="#"><spring:message code="msg.discounts"/></a> </li>
-                        <li><a href="#"><spring:message code="msg.contacts"/></a> </li>
+                        <li><a href="/contacts"><spring:message code="msg.contacts"/></a></li>
                         <li><a href="/cart"><spring:message code="msg.cart"/><span class="badge">${cart.size()}</span></a></li>
                     </ul>
                     <ul class="nav navbar-nav navbar-right">
@@ -91,7 +91,7 @@
                             <sec:authentication var="user" property="principal" />
                             <c:if test="${user.userName != null}">
                                 <li id="user-name-label">
-                                    <a>
+                                    <a href="/order">
                                         <span class="glyphicon glyphicon-user"></span>
                                             ${user.userName}
                                     </a>
@@ -114,8 +114,32 @@
     </div>
 </div>
 
-<div class="container">
 
+<div class="container">
+    <div class="row">
+        <h3><spring:message code="msg.contacts"/></h3>
+    </div>
+</div>
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-8 col-lg-9" id="contentContainer">
+            <c:forEach items="${contacts}" var="contact">
+                <div class="panel panel-default">
+                    <div class="panel-body">
+                        <spring:message code="msg.username"/>: ${contact.userName} <br>
+                        <spring:message code="user.firstName"/>: ${contact.firstName} <br>
+                        <spring:message code="user.surname"/>: ${contact.surname} <br>
+                        <spring:message code="user.email"/>: ${contact.email} <br>
+                        <spring:message code="user.phone"/>: ${contact.phone} <br>
+                    </div>
+                </div>
+            </c:forEach>
+        </div>
+        <div class="col-md-4 col-lg-3" id="rateContainer">
+
+        </div>
+    </div>
 </div>
 
 <div class="container" id="footer">
@@ -132,4 +156,3 @@
 
 </body>
 </html>
-

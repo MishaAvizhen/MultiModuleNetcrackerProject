@@ -2,7 +2,7 @@
  * Created by Александр on 23.11.2016.
  */
 $(function () {
-
+    var totalPrice = 0;
     var cartCtrl = (function () {
         var methods = {
             init: function () {
@@ -11,16 +11,47 @@ $(function () {
             },
             showCart: function () {
                 var adverts = JSON.parse($("#advertsInput").val());
+                totalPrice = 0;
                 for (var i = 0; i < adverts.length; i++) {
                     AdvertService.loadAdvert(adverts[i], false, function (advert) {
+                            if(advert != null) {
+                                totalPrice += advert.car.price;
+                            }
                             var appendPanel = createPanel(advert, adverts[i]);
                             $("#contentContainer").append(appendPanel);
                         });
                 }
+                $("#totalPrice").append(totalPrice + $.i18n.prop('currency.br'));
             },
             bindEvents: function () {
+                $("#makeOrderBtn").click(function(e) {
+                    CartService.loadCart(function(adverts) {
+                        var userId = +$("#userInput").val();
+                        for(var i = 0 ; i < adverts.length; i++) {
+                            AdvertService.loadAdvert(adverts[i], false, function(advert) {
+                                OrderService.addOrder(advert, userId, function(order) {
+                                    CartService.removeAdvertFromCart(adverts[i], function (data) {});
+                                }, function() {
+                                    CartService.removeAdvertFromCart(adverts[i], function (data) {});
+                                });
+                            });
+                        }
+                        $('#contentContainer').empty();
+                        $("#cartSize").empty();
+                        $("#cartSize").append(0);
+                        totalPrice = 0;
+                        $("#totalPrice").empty();
+                        $("#totalPrice").append(totalPrice + $.i18n.prop('currency.br'));
+                    });
+                });
                 $('#contentContainer').delegate('button.removeAdvertFromCart', 'click', function () {
                     var advertId = this.getAttribute("advert");
+                    var advertCarPrice = +$('#priceSpan' + advertId).text();
+                    if (!isNaN(advertCarPrice)) {
+                        totalPrice -= advertCarPrice;
+                        $("#totalPrice").empty();
+                        $("#totalPrice").append(totalPrice + $.i18n.prop('currency.br'));
+                    }
                     CartService.removeAdvertFromCart(advertId, function (data) {
                         if (+data == -1) {
                             $("#removeAdvertFromCartMsg" + advertId).empty();
@@ -64,7 +95,10 @@ $(function () {
             contentDiv.append(advert.description + "<br>");
             contentDiv.append($.i18n.prop('car.year') + ": " + car.year + "<br>");
             var br = $.i18n.prop('currency.br');
-            contentDiv.append(car.price + " " + br + "<br>");
+            var priceSpan = $('<span>', {id: 'priceSpan' + advertId});
+            priceSpan.append(car.price);
+            contentDiv.append(priceSpan);
+            contentDiv.append(" " + br + "<br>");
             $content.append(contentDiv);
 
             var linkDiv = $('<div>', {class: 'col-md-2 col-lg-2'});

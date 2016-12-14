@@ -1,4 +1,4 @@
-package com.netcracker.avizhen.services.model;
+package com.netcracker.avizhen.ui.web.model;
 
 import com.fasterxml.jackson.annotation.JsonView;
 import com.netcracker.avizhen.persistence.web.jsonview.Views;

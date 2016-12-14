@@ -2,6 +2,7 @@ package com.netcracker.avizhen.ui.controller;
 
 import com.netcracker.avizhen.persistence.entity.Advert;
 import com.netcracker.avizhen.services.service.AdvertService;
+import com.netcracker.avizhen.services.service.OrderService;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,12 +23,22 @@ public class AdminController {
     @Autowired
     private AdvertService advertService;
 
+    @Autowired
+    private OrderService orderService;
+
     @RequestMapping(value = "/advert/delete", method = RequestMethod.POST)
     public ModelAndView removeAdvert(@RequestParam("deleteAdvertId") int deleteAdvertId) {
-        LOG.info("Deletion advert with id " + deleteAdvertId);
+        LOG.info("Deleting advert with id " + deleteAdvertId);
         advertService.removeAdvertById(deleteAdvertId);
         ModelAndView modelAndView = new ModelAndView("redirect:/advert");
         modelAndView.addObject("msg", "Advert was deleted successful");
+        return modelAndView;
+    }
+
+    @RequestMapping(value = "/order", method = RequestMethod.GET)
+    public ModelAndView showAllOrders() {
+        ModelAndView modelAndView = new ModelAndView("orders");
+        modelAndView.addObject("orders", orderService.findAllOrders());
         return modelAndView;
     }
 

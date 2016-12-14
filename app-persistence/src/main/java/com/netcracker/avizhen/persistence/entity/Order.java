@@ -36,7 +36,8 @@ public class Order {
     @Column(name = "status")
     private String status;
 
-    @OneToMany(mappedBy="userOrder", cascade ={CascadeType.REMOVE, CascadeType.MERGE, CascadeType.REFRESH})
+    @OneToMany(mappedBy = "userOrder", cascade = {CascadeType.REMOVE, CascadeType.MERGE, CascadeType.REFRESH},
+            fetch = FetchType.EAGER)
     private Set<Item> items = new HashSet<Item>();
 
     public Order() {
